@@ -1,0 +1,213 @@
+// Mixins
+
+@mixin clearfix() { //reset: otomatik uzatma icin kullandik
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+@mixin menulist() { //reset: ul ve li hizalama
+  ul{
+    width: 100%;
+  }
+  li{
+    float: left;
+    display: inline;
+  }
+}
+
+@mixin transitioneffect($effect, $amount, $style)
+{
+  -webkit-transition: $effect $amount $style;
+  -moz-transition: $effect $amount $style;
+  -ms-transition: $effect $amount $style;
+  -o-transition: $effect $amount $style;
+  transition: $effect $amount $style;
+}
+
+@mixin sectionpadding($top, $right, $bottom, $left) //sectionlar arasi mesafe ayarlama
+{
+  padding: $top $right $bottom $left;
+}
+
+@mixin menumarginright($cols, $amount) //header menu link araliklari ayarlama
+{
+  margin-right: $amount;
+
+  &:nth-child(#{$cols}n){ //Sonuncu icin set margin right 0
+    margin-right: 0;
+  }
+}
+
+@mixin sectiontitle($size) //section basliklari icin
+{
+  font-size: $size;
+  text-transform: uppercase;
+  display: block;
+  padding-bottom: 30px;
+}
+
+@mixin grid($cols, $margin) //urun yerlestirme icin: sutun sayisi ve ara bosluk
+{
+  float: left;
+  margin-right: $margin;
+  margin-bottom: $margin;
+  width: ((1170px - (($cols - 1) * $margin)) / $cols); //sayfa genisligi 1270 px
+  &:nth-child(#{$cols}n){ //sonuncu icin set margin right 0 normalde
+    margin-right: 30px;
+  }
+}
+
+@mixin grid_responsive($cols, $margin) //urun yerlestirme icin: sutun sayisi ve ara bosluk
+{
+  float: left;
+  margin-right: $margin;
+  margin-bottom: $margin;
+  width: ((100% - (($cols - 1) * $margin)) / $cols); //sayfa genisligi 1270 px
+  &:nth-child(#{$cols}n){ //sonuncu icin set margin right 0 normalde
+    margin-right: 0;
+  }
+}
+
+@mixin mediastyle-header{ // For Small and Medium Screens
+
+    .main-logo {
+      width: 100%;
+      float: none;
+      display: flex;
+      justify-content: center;
+      padding: 40px 0 40px 0;
+      margin: 0;
+      background: $pagebgcolor;
+    }
+    #main-nav {
+      height: auto;
+      float: none;
+      margin: 0;
+      padding: 0 0 40px 0;
+
+      .top-nav, .bottom-nav {
+          width: 100%;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          clear: both;
+      }
+    }
+}
+
+@mixin mediastyle-footer { // For Extrasmall and Small Screens
+  .table, .alignright, .footer-copyright, ul {
+    width: 100%;
+    float: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 9px;
+    li { @include menumarginright(6, 15); }
+
+  }
+}
+
+/* Burger Menu Styles */
+@mixin burger_menu_style {
+  #toggle {
+    display: none;
+    position: relative;
+    width: 30px;
+    height: 50px;
+    margin: auto;
+    input {
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0;
+      cursor: pointer;
+      &:checked {
+        + span {
+          background: transparent;
+          &:after {
+            transform: rotate(45deg) translate(-5px, -5px);
+          }
+          &:before {
+            transform: rotate(-45deg) translate(-8px, 8px);
+          }
+        }
+      }
+    }
+    span {
+      position: absolute;
+      width: 100%;
+      height: 5px;
+      background: $pinkcolor;
+      margin-top: 10px;
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        background: $pinkcolor;
+        top: -9px;
+        transition: 0.3s;
+      }
+      &:after {
+        top: 9px;
+      }
+    }
+  } //end of toggle style
+
+  .burger-wrapper {
+    //display: none;
+    position: relative;
+    margin: 0 auto;
+    width: auto;
+    height: 0;
+    overflow: hidden;
+    @include transitioneffect(height, 0.5s, ease-in-out); //mixin: css transition
+
+    li {
+      position: relative;
+      text-align: center;
+      font-size: 1.25em;
+      padding: 5px;
+      a {
+        padding: 5px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        color: $bottomnavcolor;
+        text-decoration: none;
+        @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+        &:hover{
+          color: white;
+          background-color: $pinkcolor;
+        }
+      }
+    }
+    .bottom{
+      margin-top: 15px;
+      li {font-size: $topnavsize;}
+      a
+      {
+        color: $topnavcolor;
+        span { font-size: 1.25em; }
+      }
+    }
+
+  } //end of burger wrapper
+
+  .active{
+    //ekran kucukken calisir
+    @include devices(extrasmall) {
+      //display: block;
+      height: 400px;
+      @include transitioneffect(height, 0.5s, ease-in-out); //mixin: css transition
+    }
+  } //end of active
+
+}

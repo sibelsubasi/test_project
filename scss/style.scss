@@ -1,0 +1,361 @@
+
+// Import scss files
+@import "variable";
+@import "reset";
+@import "mixin";
+@import "media"; //media queries
+
+
+/* General Styles / Genel kullanim */
+.book-title{
+  color: $booktitlecolor;
+  font-size: $booktitlesize;
+  margin-top: 18px;
+  display: block;
+}
+
+.book-price{
+  color: $bookpricecolor;
+  font-size: $bookpricesize;
+  margin-top: 7px;
+  display: block;
+}
+
+.book-discount{
+  color: $bookdiscountcolor;
+  font-size: $bookdiscountsize;
+  margin-top: 7px;
+  display: block;
+  text-decoration: line-through;
+}
+
+
+/* Header */
+header{
+  @include sectionpadding(20px, 0, 40px, 0); // mixin
+
+  #header-area {
+    @include clearfix;
+    background-color: $pagebgcolor;
+  }
+  .main-logo{
+    float: left;
+    width: 29%;
+    margin: 40px 0 0 50px;
+    img { width: 100%; }
+  }
+
+  #main-nav{
+    background: $pagebgcolor;
+    height: 160px;
+    float: right;
+    margin: 0 50px 0 0;
+    @include menulist(); //resetleme ul & li hizalama
+    img{
+      float: left;
+      position: relative;
+      top: -20;
+    }
+    .top-nav{ //ust menu linkleri
+      font-size: $topnavsize;
+      padding-top: 40px;
+      li{
+        @include menumarginright(6, 35px);
+      }
+      a{
+        color: $topnavcolor;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+        &:hover{
+          color: $pinkcolor;
+          border-color: $pinkcolor;
+        }
+        span { font-size: 2.75em; margin: -17px 0 20px 0; }
+      }
+    }
+    .bottom-nav{ //alt menu linkleri
+      font-size: 1.25em;
+      li{
+          @include menumarginright(6, 30px);
+      }
+      a{
+        color: $bottomnavcolor;
+        text-decoration: none;
+        padding: 5px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+        &:hover{
+          color: white;
+          background-color: $pinkcolor;
+        }
+      }
+    }
+  } //end of main-nav
+
+  /* Burger Menu Style */
+  @include burger_menu_style;
+
+    // for extra small media devices
+    @include devices(extrasmall) {
+      @include mediastyle-header;
+      #main-nav { display: none; } //nav menu pasif
+      #toggle { display: block; } //burger menu aktif
+    }
+
+  // for small media devices
+  @include devices(small) { @include mediastyle-header; }
+  
+  // for medium media devices
+  @include devices(medium) { @include mediastyle-header; }
+
+} //end of header
+
+
+/* Banner */
+.main-banner{
+  //max-height: 385px; //385px
+  position: relative;
+  @include devices(extrasmall) { display: none; } // hide slider on extrasmall devives
+  @include devices(small) { max-height: 29.5vw; } //385px
+  @include devices(medium) { max-height: 29.7vw; } //385px
+  @include devices(large) { max-height: 29.8vw; } //385px
+  @include devices(extralarge) { max-height: 385px; } //385px
+  @include customdevice(1200px, 1269px) { max-height: 30.2vw; } //385px
+
+  .slide-div {  }
+
+  img{
+    width: 100%;
+  }
+
+  .banner-content {
+    height: 8vw; //viewport height
+    position: relative;
+    margin-top: -8vw; //viewport width
+    background: transparentize(#000000, 0.2); //sass colour function
+  }
+  h2 {
+    position: absolute;
+    left: 3.6vw;
+    top: 1vw;
+    color: #FFFFFF;
+    font-size: 2.9vw; //viewport width
+  }
+  p{
+    position: absolute;
+    left: 3.6vw;
+    top: 4.3vw;
+    color: $pinkcolor;
+    font-size: 1.8vw; //viewport width
+  }
+} //end of main-banner
+
+
+/* Sections Area */
+
+// white-area
+#white-area{
+  position: relative;
+  background-color: #FFFFFF;
+
+  @include sectionpadding(45px, 50px, 25px, 50px);
+  @include clearfix; //otomatik yukseklik icin
+  .title{
+    @include sectiontitle($titlesize); //mixin title style
+    color: $titlecolor;
+  }
+  li{
+    // for extrasmall media devices
+    @include devices(extrasmall) { @include grid_responsive(2, 7%); } //mixin grid style sutun, gridler arasi margin-right
+    // for small media devices
+    @include devices(small) { @include grid_responsive(3, 5%); } //mixin grid style sutun, gridler arasi margin-right
+    // for medium media devices
+    @include devices(medium) { @include grid_responsive(4, 4%); } //mixin grid style sutun, gridler arasi margin-right
+    // for large media devices
+    @include devices(large) { @include grid_responsive(4, 4%); } //mixin grid style sutun, gridler arasi margin-right
+    // for extralarge media devices
+    @include devices(extralarge) { @include grid_responsive(6, 3%); } //mixin grid style sutun, gridler arasi margin-right
+
+    img{
+      //box-sizing: border-box;
+      width: 100%;
+      border: 1px solid white;
+      @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+      &:hover{
+        border-color: black;
+      }
+    }
+  }
+}
+
+//pink-area
+#pink-area{
+  background-color: $pinkcolor;
+  @include sectionpadding(45px, 0, 25px, 50px); //sectionlar arasi mesafe icin
+  @include clearfix; //otomatik yukseklik icin
+  .title{
+    @include sectiontitle($titlesize);
+    color: $titlecolor;
+  }
+  li{
+    @include grid(4, 25px); //mixin grid style 4lu sutun, margin 25px
+  }
+  .blog-title{
+    color: #FFFFFF;
+    font-size: 1.4em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+  }
+  .blog-content{
+    color: #333333;
+    font-size: 0.9em;
+    line-height: 1.4em;
+    margin-bottom: 30px;
+  }
+  button{
+    color: #FFFFFF;
+    font-size: 0.9em;
+    border: 1px solid #FFFFFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 12px 30px 12px 30px;
+    background-color: transparent;
+    cursor: pointer;
+    @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+    &:hover{ //pseudo
+      color: #000000;
+      background-color: #FFFFFF;
+      i{
+        color: $pinkcolor;
+      }
+    }
+  }
+}
+
+
+// black-area
+#black-area{
+  background-color: $blackareacolor;
+  @include sectionpadding(45px, 0 ,25px, 50px); //sectionlar arasi mesafe
+  @include clearfix; //otomatik yukseklik icin
+  .title{
+    @include sectiontitle($titlesize);
+    color: #FFFFFF;
+  }
+  li{
+    @include grid(6, 30px); //3li sutun, grid arasi mesafe margin 30px
+    img{
+      width: 100%;
+      border: 1px solid $blackareacolor;
+      @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+      &:hover{
+        border-color: white;
+      }
+    }
+  }
+  .book-price {
+    color: #FFFFFF;
+  }
+  .table{
+    float: left;
+  }
+}
+
+/* Footer */
+footer
+{
+  margin-bottom: 40px;
+
+    #footer-area
+    {
+      @include sectionpadding(45px,0, 60px, 50px); //sectionlar arasi mesafe
+      @include clearfix;
+      background-color: $pagebgcolor;
+      @include menulist(); //reset: ul & li hizalama
+      li
+      {
+        margin-bottom: -9px;
+        @include menumarginright(6, 25); //menu link araliklari
+        a.footer-link{
+          color: $bottomnavcolor;
+          font-size: $topnavsize;
+          text-decoration: none;
+          border-bottom: 1px solid transparent;
+          @include transitioneffect(all, 0.25s, ease-in-out); //mixin: css transition
+          &:hover{ //pseudo
+            color: $pinkcolor;
+            border-color: $pinkcolor;
+          }
+        }
+      }
+      .table{
+        display: inline-block;
+        float: left;
+      }
+      .alignright
+      {
+        float: right;
+        margin-right: 50px;
+      }
+      .footer-copyright{
+        color: #777777;
+        font-size: 0.9em;
+        display: block;
+        clear: both;
+      }
+
+      // for small media devices
+      @include devices(small)
+      {
+        @include sectionpadding(35px, 0, 50px, 0); //sectionlar arasi mesafe
+        @include mediastyle-footer; //media.scss
+      }
+      // for extrasmall media devices
+      @include devices(extrasmall)
+      {
+        @include sectionpadding(35px, 0, 25px, 0); //sectionlar arasi mesafe
+        @include mediastyle-footer; //media.scss
+      }
+
+    } //end of #footer-area
+
+    #socialmedia
+    {
+      li
+      {
+        @include menumarginright(3, 10px); //menu link araliklari
+      }
+      .fa-facebook-square{
+        color: #516fb6;
+        font-size: 2.3em;
+        opacity: 1;
+        @include transitioneffect(opacity, 0.25s, ease-in-out);
+        &:hover{ //pseudo
+          opacity: 0.6;
+        }
+      }
+      .fa-twitter-square{
+        color: #26befe;
+        font-size: 2.3em;
+        opacity: 1;
+        @include transitioneffect(opacity, 0.25s, ease-in-out);
+        &:hover{ //pseudo
+          opacity: 0.6;
+        }
+      }
+      .fa-rss-square{
+        color: #fb8d21;
+        font-size: 2.3em;
+        opacity: 1;
+        @include transitioneffect(opacity, 0.25s, ease-in-out);
+        &:hover{ //pseudo
+          opacity: 0.6;
+        }
+      }
+    }// end of #socialmedia
+} //end of footer
